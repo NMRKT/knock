@@ -29,6 +29,10 @@ module Knock
       Knock.token_public_key || secret_key
     end
 
+    def token_issuer
+      Knock.token_issuer
+    end
+
     def options
       verify_claims.merge({
         algorithm: Knock.token_signature_algorithm
@@ -38,7 +42,8 @@ module Knock
     def claims
       {
         exp: Knock.token_lifetime.from_now.to_i,
-        aud: token_audience
+        aud: token_audience,
+        iss: token_issuer
       }
     end
 
